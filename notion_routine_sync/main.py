@@ -1,8 +1,16 @@
 from notion_client import Client
 import os
 
-notion = Client(auth=os.getenv("NOTION_TOKEN"))
+# Token & DB-ID prüfen
+notion_token = os.getenv("NOTION_TOKEN")
 database_id = os.getenv("DATABASE_ID")
+
+if not notion_token:
+    raise ValueError("NOTION_TOKEN is not set")
+if not database_id:
+    raise ValueError("DATABASE_ID is not set")
+
+notion = Client(auth=notion_token)
 
 def build_title(props):
     gym = props["Gym"]["checkbox"]
